@@ -301,24 +301,22 @@ public class TicTacToe {
         System.out.println("Enter command: start, play, exit, exit curr, help");
         while (true) {
             String command = scanner.nextLine().trim();
-            if (command.equalsIgnoreCase("exit")) {
+            if (command.equalsIgnoreCase("start")) {
+                startNewGame();
+            } else if(command.equalsIgnoreCase("accept")) {
+                acceptIncomingGameOffer();
+            } else if (command.startsWith("play ")) {
+                playMove(command);
+            } else if (command.equalsIgnoreCase("exit")) {
                 connection.disconnect();
                 System.out.printf("Disconnected. Bye %s!%n", player.getName());
                 break;
-            }else if (command.equalsIgnoreCase("exit curr")) {
-                exitCurrentGame();
-            }
-            else if(command.equalsIgnoreCase("accept")) {
-                acceptIncomingGameOffer();
-            }
-            else if (command.equalsIgnoreCase("start")) {
-                startNewGame();
-            } else if (command.startsWith("play ")) {
-                playMove(command);
-            } else if (command.contains("help")
+            }else if (command.contains("help")
                     || command.contains("?")
                     || command.equalsIgnoreCase("h")) {
                 System.out.println(helpText);
+            } else if (command.equalsIgnoreCase("exit curr")) {
+                exitCurrentGame();
             }
 
         }
@@ -354,9 +352,6 @@ public class TicTacToe {
         }
         if(success) {
             startGame(player.getCellState() == CellState.X ? CellState.O : CellState.X);
-        }
-        else {
-            exitCurrentGame();
         }
     }
 

@@ -2,6 +2,14 @@
 
 A small Java CLI multiplayer Tic-Tac-Toe built over XMPP (Smack).  
 
+## Table of Contents
+- [How to play](#how-to-play)
+- [Packages & responsibilities](#packages--responsibilities)
+- [How the pieces interact (brief)](#how-the-pieces-interact-brief)
+- [Quick pointers (files & flow)](#quick-pointers-files--flow)
+- [Testing](#testing)
+
+
 ## How to play
 
 - Clone the repository on your local machine
@@ -50,4 +58,15 @@ Flow (high level):
 - **Game engine:** `com.harutyun.game.core.TicTacToeBoard` — all game rules and state.
 - **Protocol:** `com.harutyun.xmppclient.GameExtension` / `GameExtensionProvider` — stanza format and parsing.
 
+---
+
+---
+
+## Testing
+- For testig purposes you can use the following xmpp.jp accounts:
+  - **Username 1:** `har8@xmpp.jp`
+  - **Username 2:** `har9@xmpp.jp`
+  - **Password for both:** `TryingSomething100!`
+
+*Note: These are test accounts. For production use, please create your own XMPP accounts.*
 ---
