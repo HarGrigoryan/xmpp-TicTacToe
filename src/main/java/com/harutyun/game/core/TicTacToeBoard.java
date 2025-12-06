@@ -7,7 +7,7 @@ import com.harutyun.game.exception.IllegalMoveException;
 
 public class TicTacToeBoard {
 
-    private final CellState[][] board = new CellState[rowCount][colCount];;
+    private final CellState[][] board = new CellState[rowCount][colCount];
     private CellState lastMove = CellState.O;
     private Winner winner = Winner.NOONE;
 
@@ -49,17 +49,6 @@ public class TicTacToeBoard {
     public String getCellState(int row, int col){
         CellState cellState = board[row][col];
         return cellState == null ? " " : cellState.toString();
-    }
-
-    public boolean isEmpty(){
-        for (int row = 0; row < rowCount; row++) {
-            for (int col = 0; col < colCount; col++) {
-                if(board[row][col] != null){
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     private Winner whoWon()
@@ -134,8 +123,5 @@ public class TicTacToeBoard {
         return winner;
     }
 
-    public synchronized CellState getLastMove() {
-        return lastMove;
-    }
 }
 

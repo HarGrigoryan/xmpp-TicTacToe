@@ -46,7 +46,7 @@ Flow (high level):
 - **Entry point:** `Main.java` — reads credentials and starts the app.
 - **Renderer:** `com.harutyun.cli.BoardRender` — ASCII board output.
 - **Game engine:** `com.harutyun.game.core.TicTacToeBoard` — all game rules and state.
-- **Protocol:** `com.harutyun.xmppclient.xmpp.GameExtension` / `GameExtensionProvider` — stanza format and parsing.
+- **Protocol:** `com.harutyun.xmppclient.GameExtension` / `GameExtensionProvider` — stanza format and parsing.
 
 ---
 

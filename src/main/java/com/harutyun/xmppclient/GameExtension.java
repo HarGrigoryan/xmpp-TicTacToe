@@ -1,4 +1,4 @@
-package com.harutyun.xmppclient.xmpp;
+package com.harutyun.xmppclient;
 
 import com.harutyun.game.core.Move;
 import com.harutyun.game.enums.CellState;

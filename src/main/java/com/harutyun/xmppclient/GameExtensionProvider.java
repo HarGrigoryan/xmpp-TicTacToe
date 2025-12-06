@@ -96,7 +96,7 @@
 //
 //}
 //
-package com.harutyun.xmppclient.xmpp;
+package com.harutyun.xmppclient;
 
 import com.harutyun.game.enums.CellState;
 import com.harutyun.game.core.Move;
