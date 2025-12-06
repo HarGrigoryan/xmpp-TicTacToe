@@ -1,0 +1,1 @@
+java -jar target\xmpp-TicTacToe-1.0-SNAPSHOT-shaded.jar
