@@ -176,6 +176,7 @@ public class TicTacToe {
                         }
                     }else if(extension.getStatus().equalsIgnoreCase("invalid")){
                         System.out.println("Last move failed: " + message.getBody());
+                        moveAckReceived=true;
                     }
 
                     break;
