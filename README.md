@@ -5,8 +5,8 @@ A small Java CLI multiplayer Tic-Tac-Toe built over XMPP (Smack).
 ## Table of Contents
 - [How to play](#how-to-play)
 - [Packages & responsibilities](#packages--responsibilities)
-- [How the pieces interact (brief)](#how-the-pieces-interact-brief)
-- [Quick pointers (files & flow)](#quick-pointers-files--flow)
+- [How the pieces interact](#how-the-pieces-interact)
+- [Quick pointers](#quick-pointers)
 - [Testing](#testing)
 
 
@@ -45,20 +45,19 @@ The project separates concerns into three focused packages so UI, core logic, an
 
 ---
 
-## How the pieces interact (brief)
+## How the pieces interact
 
-Flow (high level):  
+**Flow (high level):**
+
 `Main.java` → CLI prompt → `TicTacToe` → `game.core` updates → `xmppclient` sends stanzas → remote `xmppclient` parses and forwards to remote `TicTacToe`.
 
 ---
 
-## Quick pointers (files & flow)
+## Quick pointers
 - **Entry point:** `Main.java` — reads credentials and starts the app.
 - **Renderer:** `com.harutyun.cli.BoardRender` — board output.
 - **Game engine:** `com.harutyun.game.core.TicTacToeBoard` — all game rules and state.
 - **Protocol:** `com.harutyun.xmppclient.GameExtension` / `GameExtensionProvider` — stanza format and parsing.
-
----
 
 ---
 
@@ -67,6 +66,5 @@ Flow (high level):
   - **Username 1:** `har8@xmpp.jp`
   - **Username 2:** `har9@xmpp.jp`
   - **Password for both:** `TryingSomething100!`
-
-*Note: These are test accounts. For production use, please create your own XMPP accounts.*
+  - **Note:** These are test accounts. For production use, please create your own XMPP accounts.
 ---
