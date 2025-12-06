@@ -157,7 +157,7 @@ public class TicTacToe {
                             if(extension.getMove() != null) {
                                 try {
                                     board.performStep(extension.getMove());
-                                    System.out.println("Your move was successfully performed (ack received).");
+                                    System.out.println("\nYour move was successfully performed (ack received).");
                                     moveAckReceived = true;
                                     System.out.println(BoardRender.renderBoard(board, player));
                                     Winner winner = board.getWinner();
