@@ -345,6 +345,7 @@ public class TicTacToe {
             if(i++ == 30) {
                 System.out.println("\nOpponent is not answering");
                 success = false;
+                setGameState(GameState.IDLE);
                 break;
             }
             System.out.print("|");
