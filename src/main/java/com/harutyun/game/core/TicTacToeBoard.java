@@ -63,11 +63,31 @@ public class TicTacToeBoard {
             if(winner != Winner.NOONE)
                 return winner;
         }
-        Winner winner = checkDiagonal(true);
-        if (winner != Winner.NOONE)
-            return winner;
-        return checkDiagonal(false);
+        Winner winnerLeftDiag = checkDiagonal(true);
+        if (winnerLeftDiag != Winner.NOONE)
+            return winnerLeftDiag;
+        Winner winnerRightDiag = checkDiagonal(false);
+        if(winnerRightDiag != Winner.NOONE)
+        {
+            return winnerRightDiag;
+        }
+        // at this point NOONE has won (yet)
+        if(isFull()) // so if the board is full
+            return Winner.DRAW; // then it is a DRAW
+        return Winner.NOONE; // otherwise, NONE yet
     }
+
+    private boolean isFull()
+    {
+        for (int row = 0; row < rowCount; row++) {
+            for(int col = 0; col < colCount; col++) {
+                if(board[row][col] == null)
+                    return false;
+            }
+        }
+        return true;
+    }
+
 
     private Winner checkDiagonal(boolean fromLeft){
         if(fromLeft)

@@ -55,6 +55,7 @@ public class TicTacToe {
               help, ?, h           - show this help
 
             Quick tips:
+              • X gets the first move. Make it count:).
               • Use zero-based coordinates (0 0 is top-left).
               • After 'start' you'll be asked to pick X or O and opponent@xmpp.jp.
               • The program waits for an ack after sending a move.
@@ -66,7 +67,7 @@ public class TicTacToe {
         this.gameState = GameState.IDLE;
     }
 
-    private void setOpponent(String opponentUserName) {
+    private void challengeOpponent(String opponentUserName) {
         this.opponent = new Participant(opponentUserName);
         try {
             sendRequestToStart();
@@ -80,11 +81,9 @@ public class TicTacToe {
         if (opponent == null) throw new IllegalStateException("No opponent set");
 
         setCurrentGameId(java.util.UUID.randomUUID().toString());
-
-        CellState initiatorCellState = player.getCellState();
         GameExtension startExt;
         try {
-            startExt = new GameExtension("start", getCurrentGameId(), 0, 0, initiatorCellState, "offer");
+            startExt = new GameExtension("start", getCurrentGameId(), 0, 0, player.getCellState(), "offer");
             Message m = MessageBuilder.buildMessage()
                     .ofType(Message.Type.chat)
                     .setThread(getCurrentGameId())
@@ -161,16 +160,19 @@ public class TicTacToe {
                                     moveAckReceived = true;
                                     System.out.println(BoardRender.renderBoard(board, player));
                                     Winner winner = board.getWinner();
-                                    if(winner != Winner.NOONE)
+                                    if(winner == Winner.DRAW)
                                     {
-                                        System.out.println(winner + " has won the game!");
-                                        setGameState(GameState.IDLE);
+                                        handleDraw();
+                                    }else if(winner != Winner.NOONE)
+                                    {
+                                        System.out.println(winner + " has won the game! Congratulations:)");
+                                        terminateGameAfterDrawOrWin();
                                         System.out.println("Game finished.");
                                     }
                                     System.out.flush();
 
                                 }catch (IllegalMoveException e){
-                                    System.out.println("Last move failed because: " + e.getMessage());
+                                    System.out.println("\nLast move failed because: " + e.getMessage());
                                 }
                             }
                         }
@@ -209,6 +211,12 @@ public class TicTacToe {
         }
     }
 
+    private void terminateGameAfterDrawOrWin()
+    {
+        setCurrentGameId(null);
+        setGameState(GameState.IDLE);
+        opponent = null;
+    }
 
     private void onOpponentMove(GameExtension ext) throws Exception {
         Move move = ext.getMove();
@@ -232,15 +240,24 @@ public class TicTacToe {
             System.out.println("Sending move ack message failed.");
         }
 
-        System.out.println("\nMove received from " + opponent.getUserName() + ": " + move);
         System.out.println(BoardRender.renderBoard(board, player));
-        if(board.getWinner() != Winner.NOONE) {
-            System.out.println("Winner: " + board.getWinner());
-            gameState = GameState.IDLE;
+        Winner winner = board.getWinner();
+        if(winner == Winner.DRAW)
+        {
+            handleDraw();
+        }else if(winner != Winner.NOONE) {
+            System.out.println("Winner: " + winner + ". Sorry:(");
+            terminateGameAfterDrawOrWin();
             System.out.println("Game Finished!");
             System.out.flush();
         }
+    }
 
+    private void handleDraw(){
+        System.out.println("Draw, not too bad:)");
+        terminateGameAfterDrawOrWin();
+        System.out.println("Game Finished!");
+        System.out.flush();
     }
 
 
@@ -337,7 +354,7 @@ public class TicTacToe {
         }
         player.setCellState(cellState);
         System.out.println("Please input opponents userName in the following format 'userNaem@xmpp.jp'");
-        setOpponent(scanner.nextLine().trim());
+        challengeOpponent(scanner.nextLine().trim());
         System.out.println("Waiting for opponent to agree to the game:");
         int i = 1;
         boolean success = true;
@@ -435,6 +452,8 @@ public class TicTacToe {
         if(getGameState() == GameState.IN_PROGRESS) {
             gameState = GameState.IDLE;
             sendMessage(getCurrentGameId(), "terminated", "exit");
+            setCurrentGameId(null);
+            opponent = null;
             System.out.println("Current game has been terminated.");
         }else {
             System.out.println("No ongoing game to exit from.");
