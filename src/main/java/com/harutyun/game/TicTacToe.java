@@ -118,6 +118,7 @@ public class TicTacToe {
                 .build();
 
         connection = new XMPPTCPConnection(config);
+        connection.setParsingExceptionCallback((exception) -> System.err.println("[WARN] Ignoring unparsable stanza: " + exception.getParsingException().getMessage()));
         connection.connect();
         try {
             connection.login(player.getName(), player.getPassword());
